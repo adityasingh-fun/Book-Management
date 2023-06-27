@@ -16,7 +16,7 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if(!email||!password) {
-      return res.status(400).json({status:false, message:"Invalid email or password"});
+      return res.status(400).json({status:false, message:"Please provide email and password"});
     }
 
     if(email.trim().length==0 ||!(password.trim().length<=15 && password.trim().length>=8) ||!validator.isEmail(email)){

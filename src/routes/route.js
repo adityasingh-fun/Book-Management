@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const userContrlr = require('../controller/userController');
 const BookContrl = require('../controller/bookController');
 const ReviewCntrl = require('../controller/reviewController');
@@ -19,8 +20,10 @@ router.delete('/books/:bookId',Mid.authenticationMid,Mid.authorizationMid,BookCo
 //review apis
  router.post('/books/:bookId/review',Validtn.reviewValidation,ReviewCntrl.createReview);
  router.put('/books/:bookId/review/:reviewId',Validtn.reviewValidationUpdt,ReviewCntrl.updateReviewById);
- router.delete('/books/:bookId/review/:reviewId',Validtn.reviewValidation,
- ReviewCntrl.deleteReview);
+ router.delete('/books/:bookId/review/:reviewId',Validtn.reviewValidation,ReviewCntrl.deleteReview);
+
+ //aws api 
+ router.post('/write-file-aws',BookContrl.createAwsFile)
 
 module.exports = router;
 

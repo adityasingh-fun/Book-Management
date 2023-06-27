@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const ObjectId =  mongoose.Schema.Types.ObjectId;
 const bookSchema = new mongoose.Schema({
+    bookcover:{type:String, required: true},
     title: { type: String, required: true, unique: true },
     excerpt: { type: String, required: true },
     userId: { type:ObjectId, required: true, ref: 'Users' },

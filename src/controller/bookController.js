@@ -1,12 +1,35 @@
 const BookModel = require('../models/bookModel');
 const ReviewModel = require('../models/reviewModel');
 
+const aws= require("aws-sdk")
+const {uploadFile}=require ('../aws/aws')
+
+const createAwsFile= async function(req, res){
+    try{
+        let files= req.files
+        if(files && files.length>0){
+            //upload to s3 and get the uploaded link
+            // res.send the link back to frontend/postman
+            let uploadedFileURL= await uploadFile( files[0] )
+           return res.status(201).send({msg: "file uploaded succesfully", data: uploadedFileURL})
+        }
+        else{
+          return  res.status(400).send({ msg: "No file found" })
+        }
+
+    }
+    catch(err){
+        res.status(500).send({msg: err})
+    }   
+}
+
+
 //book creation api -
 
 const createBooks = async function (req, res) {
     try {
-        data = req.body;
-        const { title, excerpt, userId, ISBN, category, subcategory, reviews, deletedAt, isDeleted, releasedAt} = data
+        let data = req.body;
+        const { bookcover,title, excerpt, userId, ISBN, category, subcategory, reviews, deletedAt, isDeleted, releasedAt} = data
         
         const existingBook = await BookModel.findOne({ title: title });
         if (existingBook) {
@@ -20,6 +43,7 @@ const createBooks = async function (req, res) {
         const book = await BookModel.create(data);
         const createdBook = {
             _id: book._id,
+            bookcover:book.bookcover,
             title: book.title,
             excerpt: book.excerpt,
             userId: book.userId,
@@ -166,4 +190,4 @@ const deleteBookById = async function(req, res) {
         return res.status(500).send({ status: false, message: 'An error occurred while deleting book by id' });
     }
 }
-module.exports = {createBooks,getAllBooks,getBookById,updateBookById,deleteBookById};
+module.exports = {createAwsFile,createBooks,getAllBooks,getBookById,updateBookById,deleteBookById};

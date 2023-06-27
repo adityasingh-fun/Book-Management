@@ -45,7 +45,7 @@ const createReview = async function (req, res) {
 const updateReviewById = async function (req, res) {
     try {
 
-        const { review, rating, reviewedBy } = req.body;
+        const { review, rating, reviewedBy,reviewedAt } = req.body;
         const book = await BookModel.findById({ _id: req.params.bookId, isDeleted: false });
         if (!book)
             return res.status(404).send({ status: true, message: "no books with such id present" });

@@ -5,13 +5,13 @@ const validator = require('validator');
 const userValidations = async function(req,res,next){
 
     try{
-        const {title,phone,name,email,password} = req.body;
+        const {bookcover,title,phone,name,email,password} = req.body;
 
-        if(!title ||!phone ||!name ||!email ||!password)
+        if(!bookcover || !title ||!phone ||!name ||!email ||!password)
         return res.status(400).send({status:false, message:"Required field missing"});
 
 
-        if(title.trim().length===0||name.trim().length===0||email.trim().length===0||password.trim().length===0||phone.toString().trim().length===0){
+        if(bookcover.trim().length===0 || title.trim().length===0||name.trim().length===0||email.trim().length===0||password.trim().length===0||phone.toString().trim().length===0){
             return res.status(400).send({status:false, message:"invalid input"});
         }
 
